@@ -1,0 +1,43 @@
+services:
+  web:
+    container_name: nginx
+    build:
+      context: requirements/nginx
+    volumes:
+      - wordpress-path:/usr/src/app/php
+    ports:
+      - 80:80
+    depends_on:
+      - app
+
+  app:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+    hostname: wordpress
+    volumes:
+      - wordpress-path:/usr/src/app/wordpress
+    ports:
+      - 9000:9000
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+
+  # mariadb:
+  #   container_name: mariadb
+  #   build:
+  #     context: ./requirements/mariadb
+  #   volumes:
+  #     - ./requirements/mariadb/db:/var/lib/mariadb
+  #   ports:
+  #     - 3306:3306
+
+volumes:
+  wordpress-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/seonkim/data/wordpress'
