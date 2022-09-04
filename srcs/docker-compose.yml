@@ -4,7 +4,8 @@ services:
     build:
       context: requirements/nginx
     volumes:
-      - wordpress-path:/usr/src/app/php
+      - wordpress-vol:/var/www/wordpress
+      - ./requirements/nginx/conf:/etc/nginx/http.d
     ports:
       - 80:80
     depends_on:
@@ -16,7 +17,8 @@ services:
       context: requirements/wordpress
     hostname: wordpress
     volumes:
-      - wordpress-path:/usr/src/app/wordpress
+      - wordpress-vol:/var/www/wordpress
+      - ./requirements/wordpress/conf:/etc/php8/php-fpm.d
     ports:
       - 9000:9000
     environment:
@@ -41,3 +43,10 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/seonkim/data/wordpress'
+  
+  mariadb-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/seonkim/data/mariadb'
