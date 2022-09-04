@@ -17,7 +17,7 @@ fi
 if [ "$DOCKER_AS" -ne "1" ]
 then
   echo "alias dc=\"docker-compose up\"" >> $HOME/.zshrc
-  echo "alias docker-rma=\"docker rm -f \`docker ps -qa\` && docker rmi -f \`docker images -qa\`\"" >> $HOME/.zshrc
+  echo "alias drm=\"sh ~/inception/scripts/docker-remove-container.sh\"" >> $HOME/.zshrc
   echo "export DOCKER_AS=\"1\"" >> $HOME/.zshrc
 
   source $HOME/.zshrc

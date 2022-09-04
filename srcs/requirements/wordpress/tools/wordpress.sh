@@ -7,6 +7,8 @@ else
   curl https://ko.wordpress.org/latest-ko_KR.tar.gz -o wordpress.tar.gz
   tar -zxvf wordpress.tar.gz
   rm -rf wordpress.tar.gz
+
+  mv wordpress/* /var/www/wordpress/
 fi
 
 exec "$@"

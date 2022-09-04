@@ -23,7 +23,10 @@ then
 
   touch /var/lib/mysql/mariadb_flag
 
-  mysqld_safe --init-file=$PWD/initial.sql
-else
-  mysqld_safe
+  /usr/bin/mysqld --user=mysql --bootstrap < initial.sql
 fi
+
+sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
+
+exec /usr/bin/mysqld --user=mysql --console
