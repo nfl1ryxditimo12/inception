@@ -5,6 +5,9 @@ if [ ! -d "/run/mysqld" ]; then
 	chown -R mysql:mysql /run/mysqld
 fi
 
+sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
+
 if [ ! -f /var/lib/mysql/mariadb_flag ]
 then
 
@@ -17,16 +20,18 @@ then
   echo "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'%';" >> initial.sql
   echo "FLUSH PRIVILEGES;" >> initial.sql
   echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" >> initial.sql
-  ##
+  # echo "FLUSH PRIVILEGES;" >> initial.sql
   echo $(cat initial.sql)
   echo $(ls -al)
 
   touch /var/lib/mysql/mariadb_flag
 
-  /usr/bin/mysqld --user=mysql --bootstrap < initial.sql
+  sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+  sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
+
+  /usr/bin/mysqld --user=mysql --console --init-file=/usr/src/app/initial.sql
+  
+  # mysql -u root < /usr/asrc/app/initial.sql
+else
+  exec /usr/bin/mysqld --user=mysql --console
 fi
-
-sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-
-exec /usr/bin/mysqld --user=mysql --console

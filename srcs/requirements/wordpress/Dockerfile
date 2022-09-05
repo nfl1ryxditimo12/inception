@@ -8,9 +8,11 @@ RUN apk add --update \
       curl \
       php8 \
       php8-fpm \
-      php8-mysqli
+      php8-mysqli \
+      php8-phar \
+      mariadb-client
 
-WORKDIR /usr/src/app
+WORKDIR /var/www/wordpress
 
 COPY ./tools/wordpress.sh ./wordpress.sh
 ENTRYPOINT [ "sh", "wordpress.sh" ]

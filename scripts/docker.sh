@@ -13,15 +13,12 @@ then
   sudo chmod 755 /etc/init.d/docker-permission.sh  
 fi
 
-
 if [ "$DOCKER_AS" -ne "1" ]
 then
+  echo "alias ds=\"zsh ~/inception/scripts/docker-exec.sh\"" >> $HOME/.zshrc
   echo "alias dc=\"docker-compose up\"" >> $HOME/.zshrc
-  echo "alias drm=\"sh ~/inception/scripts/docker-remove-container.sh\"" >> $HOME/.zshrc
+  echo "alias drm=\"sh ~/inception/scripts/docker-remove.sh\"" >> $HOME/.zshrc
+  echo "alias darm=\"bash ~/inception/scripts/docker-all-remove.sh\"" >> $HOME/.zshrc
   echo "export DOCKER_AS=\"1\"" >> $HOME/.zshrc
-
-  source $HOME/.zshrc
-else
-  echo world
 fi
 

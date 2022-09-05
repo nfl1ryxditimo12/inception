@@ -29,7 +29,7 @@ function ssh() {
   sudo sed -i "s/#Port 22/Port 22/g" /etc/ssh/sshd_config
   sudo systemctl restart ssh
   sudo ufw enable
-  sudo ufw allow 22
+  sudo ufw allow 443
   echo "=================================================SSH END"
 }
 
