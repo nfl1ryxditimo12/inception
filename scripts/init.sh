@@ -7,7 +7,7 @@ function repository() {
 	echo "=================================================REPOSITORY START"
   sudo sed -i "s/http:\/\/security.ubuntu.com/https:\/\/mirror.kakao.com/g" /etc/apt/sources.list
   sudo sed -i "s/http:\/\/kr.archive.ubuntu.com/https:\/\/mirror.kakao.com/g" /etc/apt/sources.list
-sudo apt-get update  
+  sudo apt-get update  
 	echo "=================================================REPOSITORY END"
 }
 
@@ -16,7 +16,6 @@ function zsh() {
   sudo apt-get install -y curl zsh
 
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   echo "=================================================ZSH END"
 }
 
@@ -42,5 +41,7 @@ function util() {
     systemd 
 	echo "=================================================UTIL END"
 }
+
+sudo sed -i "s/127.0.0.1	localhost/127.0.0.1	localhost seonkim.42.fr/g" /etc/hosts
 
 repository && ssh && util && zsh
