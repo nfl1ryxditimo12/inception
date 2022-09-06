@@ -23,8 +23,6 @@ else
 
   mv wordpress/* /var/www/wordpress/
   rm -rf wordpress/
-
-  wp db create
 fi
 
 exec "$@"

@@ -20,7 +20,6 @@ then
   echo "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'%';" >> initial.sql
   echo "FLUSH PRIVILEGES;" >> initial.sql
   echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" >> initial.sql
-  # echo "FLUSH PRIVILEGES;" >> initial.sql
   echo $(cat initial.sql)
   echo $(ls -al)
 
@@ -30,8 +29,6 @@ then
   sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 
   /usr/bin/mysqld --user=mysql --console --init-file=/usr/src/app/initial.sql
-  
-  # mysql -u root < /usr/asrc/app/initial.sql
 else
   exec /usr/bin/mysqld --user=mysql --console
 fi

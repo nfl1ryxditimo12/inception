@@ -1,5 +1,5 @@
 services:
-  web:
+  nginx:
     container_name: nginx
     build:
       context: requirements/nginx
@@ -9,9 +9,11 @@ services:
     ports:
       - 443:443
     depends_on:
-      - app
+      - wordpress
+    networks:
+      - inception
 
-  app:
+  wordpress:
     container_name: wordpress
     build:
       context: requirements/wordpress
@@ -27,9 +29,11 @@ services:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
     depends_on:
-      - db
+      - mariadb
+    networks:
+      - inception
 
-  db:
+  mariadb:
     container_name: mariadb
     build:
       context: ./requirements/mariadb
@@ -44,6 +48,12 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     privileged: true 
+    networks:
+        - inception
+
+networks:
+  inception:
+    driver: bridge
 
 volumes:
   wordpress-vol:
@@ -59,4 +69,3 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/seonkim/data/mariadb'
-
