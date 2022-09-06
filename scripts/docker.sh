@@ -7,9 +7,9 @@ sudo su -c 'printf "{\n\t\"live-restore\": true\n}" > /etc/docker/docker.json' &
 sudo chmod 666 /var/run/docker.sock && \
 sudo chmod +x /usr/local/bin/docker-compose
 
-if [ -f ./docker-permission.sh ]
+if [ -f $HOME/inception/scripts/docker-permission.sh ]
 then
-  sudo cp ./docker-permission.sh /etc/init.d/
+  sudo cp $HOME/inception/scripts/docker-permission.sh /etc/init.d/
   sudo chmod 755 /etc/init.d/docker-permission.sh  
 fi
 

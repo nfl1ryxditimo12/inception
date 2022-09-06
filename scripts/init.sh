@@ -29,6 +29,7 @@ function ssh() {
   sudo systemctl restart ssh
   sudo ufw enable
   sudo ufw allow 443
+  sudo ufw allow 22
   echo "=================================================SSH END"
 }
 
