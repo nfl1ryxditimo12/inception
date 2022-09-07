@@ -12,12 +12,10 @@ stop:
 	@docker-compose -f srcs/docker-compose.yml down
 
 clean:
-	@docker rm -f `docker ps -aq`
-	@docker rmi -f `docker images -aq`
+	@docker rm -f `docker ps -aq` || docker rmi -f `docker images -aq`
 
 fclean:
-	@docker rm -f `docker ps -aq`
-	@docker rmi -f `docker images -aq`
+	@docker rm -f `docker ps -aq` || docker rmi -f `docker images -aq`
 	@sudo rm -rf ~/data/*
 	@sudo docker system prune --volumes --force
 
